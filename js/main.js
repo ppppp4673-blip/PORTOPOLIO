@@ -262,3 +262,17 @@ window.addEventListener("load", () => {
     ScrollTrigger.refresh();
     setTimeout(() => ScrollTrigger.refresh(), 500); // ✅ Lenis 초기화 후 0.5초 뒤 다시
 });
+const cursor = document.querySelector(".custom-cursor");
+
+document.addEventListener("mousemove", (e) => {
+  cursor.style.top = `${e.clientY}px`;
+  cursor.style.left = `${e.clientX}px`;
+});
+
+document.addEventListener("mousedown", () => {
+  cursor.classList.add("click");
+});
+
+document.addEventListener("mouseup", () => {
+  cursor.classList.remove("click");
+});
