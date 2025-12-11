@@ -1,201 +1,264 @@
-// GSAP에서 ScrollTrigger와 ScrollToPlugin을 사용하기 위해 등록
-gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+// ==================== GSAP 플러그인 ====================
+gsap.registerPlugin(ScrollTrigger);
 
-$(function () {
+// ==================== Lenis ====================
+const lenis = new Lenis({
+    duration: 0.8,
+    easing: (t) => t, // 선형 (빠른 반응)
+    smooth: true,
+    smoothTouch: true, // 모바일 터치 스크롤 부드럽게
+});
 
+function raf(t) {
+    lenis.raf(t);
+    ScrollTrigger.update();
+    requestAnimationFrame(raf);
+}
+requestAnimationFrame(raf);
 
+// ==================== Header show/hide ====================
+const site_header = document.getElementById("site_header");
+let lastY = 0;
+lenis.on("scroll", ({ scroll }) => {
+    const y = scroll;
+    if (y > lastY + 4 && y > 120) site_header.style.transform = "translateY(-100%)";
+    else if (y < lastY - 4) site_header.style.transform = "translateY(0)";
+    lastY = y;
+});
 
-    //스크롤에 따라 경로 애니메이션 진행
-    function calcDashOffset(scrollY, element, length) {
-        const ratio = (scrollY - element.offsetTop) / element.offsetHeight; // 스크롤 위치와 요소 높이 비율 계산
-        const value = length - (length * ratio); // 대시 오프셋 값을 계산
-        return Math.max(0, Math.min(value, length)); // 범위 내에서 반환
-    }
+// ==================== Horizontal gallery helper ====================
+const total_width = () => {
+    const wrap = document.querySelector(".horizontal_section");
+    const track = document.querySelector(".track");
+    return track.scrollWidth - wrap.clientWidth;
+};
 
-    //스크롤 이벤트에 따른 경로 애니메이션 처리
-    function scrollHandler(svgCon, path, pathLenght) {
-        const scrollY = window.scrollY + (window.innerHeight * 0.8);
-        //화면 높이 고려한 스크롤 위치 계산
-        path.style.strokeDashoffset = calcDashOffset(scrollY, svgCon, pathLenght)
-    }
+// ==================== Navigation Active ====================
+const ham = document.querySelector('.menu_toggle');
+const mpanel = document.querySelector('.mobile_panel');
+ham.addEventListener('click', () => {
+    document.querySelector('.mobile_panel').classList.toggle('block');
+})
 
-    window.addEventListener('scroll', () => {
-        //svg 경로 애니메이션 설정
-        const svgCon = document.querySelector('#con2');
-        const path = document.querySelector('.path');
-        const pathLenght = path.getTotalLength(); //경로의 총 길이 계산
-        path.style.strokeDasharray = pathLenght; //경로를 점선처럼 보이게 설정
-        path.style.strokeDashoffset = pathLenght; //경로를 숨기기 위해 대시 오프셋을 길이로 설정
-        scrollHandler(svgCon, path, pathLenght)
-        const svgCon2 = document.querySelector('#con6');
-        const path2 = document.querySelector('.path2');
-        const pathLenght2 = path2.getTotalLength(); //경로의 총 길이 계산
-        path2.style.strokeDasharray = pathLenght2; //경로를 점선처럼 보이게 설정
-        path2.style.strokeDashoffset = pathLenght2; //경로를 숨기기 위해 대시 오프셋을 길이로 설정
-        scrollHandler(svgCon2, path2, pathLenght2)
+const navLinks = document.querySelectorAll(".primary_nav a, .mobile_menu a");
 
-    }); //스크롤 이벤트 리스너 추가
+function set_active(link) {
+    // 1️⃣ .primary_nav 내의 링크들만 초기화
+    const primaryLinks = document.querySelectorAll(".primary_nav a");
+    primaryLinks.forEach((a) => a.classList.remove("is_active"));
 
-    //세로 스크롤에 따라 배경색과 글자색 clip-path 변화 애니메이션
-    //gsap 타임라인을 만든다. 스크롤 애니메이션 순서표
-    gsap.timeline({
-        scrollTrigger: {
-            //스크롤을 감지할 대상 :
-            trigger: '#con3',
-            start: '0% 80%', //#con3의 맨위(0%)가 화면의 80% 지점에 닿을때 애니시작
-            end: '100% 100%', //#con3의 맨아래(100%)가 화면의 맨아래(100%)에 닿을 때 애니끝
-            scrub: 1,
-            //스크롤 움직임에 따라 애니메이션도 같이 움직이게 함
-        }
-    })
-        .to('#con3', {
-            backgroundColor: '#fff',
-            color: '#000',
-            duration: 5,
-            ease: 'none' //애니메이션이 부드럽게 변하지 않고 스크롤에 딱맞게 움직이게 설정
-        }, 0)
-        .fromTo('#con3 .videoWrap video', { 'clip-path': 'inset(60% 60% 60% 60% round 30%)' }, {
-            'clip-path': 'inset(0% 0% 0% 0% round 0%)', duration: 5, ease: 'none'
-        }, 0)
+    // 2️⃣ 클릭된 링크와 동일한 href를 가진 .primary_nav 링크만 활성화
+    const href = link.getAttribute("href");
+    const match = document.querySelector(`.primary_nav a[href="${href}"]`);
+    if (match) match.classList.add("is_active");
+}
 
 
-    //가로 스크롤 섹션 애니메이션 설정
-    const horizontal = document.querySelector('.horizontal');
-    const sections = gsap.utils.toArray('.horizontal>section');
-    let ani = [];
-    const scrollTween = gsap.to(sections, {
-        xPercent: -100 * (sections.length - 1),//전체 섹션 수만큼 왼쪽으로 밀기
-        ease: 'none',//부드럽게 넘기지 않고 스크롤에 따라 바로 반응
-        scrollTrigger: {
-            trigger: horizontal,
-            start: 'top top', //스크롤이 맨 위에 닿을때 시작
-            end: () => "+=" + (horizontal.offsetWidth - innerWidth), //스크롤 끝나는 위치 계산
-            pin: true, //해당 부분에서 화면을 고정해서 보여줌
-            markers: true,//디버그용 마커 보여주기
-            scrub: 1, //스크롤에 따라 실시간으로 움직임
-            anticipatePin: 1, // 핀 고정 시 살짝 미리 준비해서 부드럽게
-            invalidateOnRefresh: true, // 새로고침하면 위치 다시 계산해줌
-        }
-    })
+// 섹션 맵 정의
+const sub_map = [
+    "#hero",
+    "#textArea",
+    "#showcase",
+    "#gallery",
+    "#vid"
+];
 
-    // 각 섹션에 애니메이션 적용
-    const animations = [
-        { target: ".iw1", properties: { y: -200 }, duration: 2, ease: "elastic" },
-        { target: ".iw2", properties: { rotation: 720 }, duration: 2, ease: "elastic" },
-        { target: ".iw3", properties: { scale: 0.3 }, duration: 2, ease: "elastic" },
-        { target: ".iw4", properties: { x: -100, rotation: 50 }, duration: 2.5, ease: "power1.inOut" },
-        { target: ".iw5", properties: { scale: 2.3 }, duration: 1, ease: "none" }
-    ];
+sub_map.forEach((id) => {
+    const section = document.querySelector(id);
+    const linkEl = document.querySelectorAll(
+        `.primary_nav a[href="${id}"], .mobile_menu a[href="${id}"]`
+    );
+    if (!section || !linkEl.length) return;
 
-    //애니메이션 설정
-    animations.forEach((anim, index) => {
-        ani[index] = gsap.to(anim.target, {
-            ...anim.properties,
-            duration: anim.duration,
-            ease: anim.ease,
-            scrollTrigger: {
-                trigger: anim.target,
-                containerAnimation: scrollTween, // 가로 스크롤 애니메이션과 동기화
-                start: 'left center',
-                toggleActions: "play none reverse none", //한번 재생, 뒤로갈때만 역재생
-                id: anim.target //디버깅용 id
-            }
-        })
-    })
-
-
-
-    //각 애니메이션을 트리거하는 함수
-    function triggerAnimation(index) {
-        //ani[index]가 존재하는지 체크하고 애니메이션 실행
-        if (ani[index]) {
-            ani[index].restart(); //해당 섹션의 애니메이션 재시작
-        }
-    }
-
-    //페이지네이션 버튼 클릭시 해당 섹션으로 이동하는 설정
-    const pageButtons = document.querySelectorAll('.page-btn');
-
-    //페이지네이션 버튼 활성화 상태를 업데이트하는 함수
-    function updatePagination(activeIndex) {
-        pageButtons.forEach((button, index) => {
-            button.classList.toggle('active', index == activeIndex);
-        })
-    }
-
-
-    pageButtons.forEach((button, index) => {
-        button.addEventListener('click', () => {
-            const targetPosition = -100 * index; //각 버튼에 해당하는 위치 계산
-
-            //가로 스크롤 애니메이션을 직접 설정
-            gsap.to(sections, {
-                xPercent: targetPosition,//해당 섹션으로 이동
-                duration: 1, //이동시간
-                ease: "power2.inOut", // 부드러운 애니메이션
-                onComplete: () => {
-                    triggerAnimation(index); //각 섹션에 대한 애니메이션 실행
-                    updatePagination(index); //각 섹션에대한 애니메이션 실행
-                }
-            })
-        })
-    })
-
-    //각 섹션에 대한 스크롤 트리거 설정
-    sections.forEach((section, index) => {
+    if (id === "#showcase") {
+        // Showcase → pin_scene ScrollTrigger와 동일
         ScrollTrigger.create({
             trigger: section,
-            start: "left center",
-            onEnter: () => {
-                updatePagination(index);
-                triggerAnimation(index);
-            },
-            onEnterBack: () => {
-                updatePagination(index);
-                triggerAnimation(index);
-            },
-            containerAnimation: scrollTween, // 가로 스크롤 애니메이션과 동기화   
-        })
+            start: "top top",
+            end: "+=1800",
+            onEnter: () => linkEl.forEach((a) => set_active(a)),
+            onEnterBack: () => linkEl.forEach((a) => set_active(a)),
+        });
+    } else if (id === "#gallery") {
+        // Gallery → horizontal_section ScrollTrigger와 동일
+        ScrollTrigger.create({
+            trigger: section,
+            start: "top top",
+            end: () => "+=" + (total_width() + window.innerWidth),
+            onEnter: () => linkEl.forEach((a) => set_active(a)),
+            onEnterBack: () => linkEl.forEach((a) => set_active(a)),
+        });
+    } else {
+        // 일반 섹션
+        ScrollTrigger.create({
+            trigger: section,
+            start: "top top+=100",
+            end: "bottom top+=100",
+            onEnter: () => linkEl.forEach((a) => set_active(a)),
+            onEnterBack: () => linkEl.forEach((a) => set_active(a)),
+        });
+    }
+});
+
+// ==================== 네비 클릭 Lenis.scrollTo ====================
+navLinks.forEach((link) => {
+    link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute("href");
+        const targetEl = document.querySelector(targetId);
+        mpanel.classList.remove('block');
+        // 메뉴 닫히는 transition 끝난 후 스크롤 실행
+
+        if (targetEl) {
+            lenis.scrollTo(targetEl, { offset: -80 });
+        }
+        set_active(link);
+    });
+});
+
+// ==================== Hero intro ====================
+gsap.timeline({ defaults: { duration: 0.8, ease: "power2.out" } })
+    .to(".hero_title", { y: 0, opacity: 1 })
+    .to(".hero_sub", { y: 0, opacity: 1 }, "<0.12")
+    .to(".hero_cta", { y: 0, opacity: 1 }, "<0.12");
+
+
+
+
+
+
+let tl = gsap.timeline({
+    scrollTrigger: {
+        trigger: ".txt_area",
+        start: "top 20%",
+        end: "bottom bottom",
+        scrub: true,
+    }
+});
+
+tl.to(".txt_area strong.tit", { backgroundSize: "100%", duration: 1, ease: "none" })
+    .to(".txt_area", {
+        backgroundSize: "100% 100%",
+        opacity: 1,
+        duration: 1,
+        ease: "none"
     })
-
-
-    //article 요소들에 부드럽게 나타나는 애니메이션 추가
-
-    let con5Article = gsap.utils.toArray('.articles article');
-    con5Article.forEach((el, i) => {
-        gsap.timeline({
-            scrollTrigger: {
-                trigger: el,
-                start: 'top bottom', //화면 아래쪽에서 시작
-                end: 'top 20%',  //화면 위쪽으로 거의다 올라왔을때 끝
-                scrub: 0.5 //스크롤에 따라 부드럽게 반응
-            }
-        }).fromTo(
-            el, { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1 }, 0 //타임라인 시작 위치
-        )
-    })
+    .to(".txt_area i.tit", { backgroundSize: "100%", duration: 1, ease: "none" }, "+=0.6")
+    .to(".txt_area b.tit", { backgroundSize: "100%", duration: 1, ease: "none" }, "+=1.2")
+    .to(".txt_area em.tit", { backgroundSize: "100%", duration: 1, ease: "none" }, "+=1.8");
 
 
 
-    // 텍스트 애니메이션 박스 내 스크롤 설정 (simplyScroll)
-    $('.txtAniBox .txtAni1').simplyScroll({
-        speed: 4,
-        pauseOnHover: true,
-        pauseOnTouch: false,
-        direction: 'forwards',
+
+// ==================== Showcase stack ====================
+const pin_bg = document.getElementById("pin_bg");
+const photos = gsap.utils.toArray(".photo");
+
+const pinTl = gsap.timeline({
+    scrollTrigger: {
+        trigger: ".pin_scene",
+        start: "top top",
+        end: "+=1800",
+        pin: true,
+        scrub: true,
+        anticipatePin: 1,
+        toggleActions: "play none none reset",
+    },
+});
+
+pinTl.to(pin_bg, { filter: "blur(12px)", scale: 1.06, duration: 1, ease: "none" }, 0);
+photos.forEach((el, i) => {
+    pinTl.add(() => {
+        el.style.zIndex = String(100 + i);
+        el.classList.add("glitch");
+        gsap.delayedCall(0.4, () => el.classList.remove("glitch"));
+    }, i * 0.22);
+    pinTl.fromTo(
+        el,
+        { opacity: 0, y: 1080, scale: 0.4, filter: "blur(6px)", rotate: i % 2 ? 4 : -4 },
+        { opacity: 1, y: 0, scale: 1, filter: "blur(0px)", rotate: i % 2 ? 5 : -5, duration: 0.85, ease: "power3.out" },
+        i * 0.22
+    );
+});
+pinTl.to(".float_wrap", { yPercent: -6, duration: 0.8, ease: "none" }, ">0.1");
+
+// ==================== Horizontal gallery ====================
+gsap.to(".track", {
+    x: () => -total_width(),
+    ease: "none",
+    scrollTrigger: {
+        trigger: ".horizontal_section",
+        start: "top top",
+        end: () => "+=" + (total_width() + window.innerWidth),
+        scrub: true,
+        pin: true,
+        anticipatePin: 1,
+        toggleActions: "play none none reset",
+        onUpdate: () => updateCoverflow(),
+    },
+});
+
+// ======================== Coverflow Effect ==========================
+const cards = gsap.utils.toArray(".h_item");
+
+function updateCoverflow() {
+    const viewportCenter = window.innerWidth / 2;
+
+    cards.forEach((card) => {
+        const rect = card.getBoundingClientRect();
+        const cardCenter = rect.left + rect.width / 2;
+
+        // 중심에서 떨어진 거리 (-1 ~ 1)
+        const dist = (cardCenter - viewportCenter) / viewportCenter;
+
+        // Coverflow 효과 매핑
+        const rotateY = dist * -35;      // 좌우 회전
+        const scale = 1 - Math.abs(dist) * 0.4; // 축소
+        const opacity = 1 - Math.abs(dist) * 0.6;
+        const z = -Math.abs(dist) * 280; // 깊이감
+
+        gsap.set(card, {
+            rotateY,
+            scale,
+            opacity,
+            z,
+            transformOrigin: "center",
+        });
     });
-    $('.txtAniBox .txtAni2').simplyScroll({
-        speed: 3,
-        pauseOnHover: true,
-        pauseOnTouch: false,
-        direction: 'backwards',
-    });
-    $('.txtAniBox .txtAni3').simplyScroll({
-        speed: 4,
-        pauseOnHover: true,
-        pauseOnTouch: false,
-        direction: 'forwards',
-    });
+}
+gsap.timeline({
+    scrollTrigger: {
+        trigger: ".vid",
+        start: "top 40%",
+        end: "bottom center",
+        scrub: true,
+        // markers: true,
+        toggleClass: { targets: ".vid", className: "on" },
+    }
+});
+
+// 2. .vid_box 핀 처리 및 내부 video 스케일 애니메이션
+gsap.timeline({
+    scrollTrigger: {
+        trigger: ".vid_box",               // 부모 섹션을 트리거로 사용
+        start: "top 10%",
+        end: "top 10%+=2500",           // 1500px 스크롤 동안 애니메이션 진행 (필요에 따라 조정)
+        scrub: 1,
+        pin: ".vid_box",               // .vid_box를 핀 처리
+        pinSpacing: true,
+        pinReparent: true,             // 부모 transform 문제 해결
+        // markers: true,
+    }
+})
+    .fromTo(".vid_box video",
+        { scale: 0.45, opacity: 0.45, transformOrigin: "top center" },
+        { scale: 1, opacity: 1, ease: "power2.out", duration: 2 }
+    );
+window.addEventListener("resize", () => ScrollTrigger.refresh());
 
 
+// ==================== Refresh ====================
+window.addEventListener("load", () => {
+    ScrollTrigger.refresh();
+    setTimeout(() => ScrollTrigger.refresh(), 500); // ✅ Lenis 초기화 후 0.5초 뒤 다시
 });
