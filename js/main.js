@@ -33,6 +33,11 @@ const total_width = () => {
     return track.scrollWidth - wrap.clientWidth;
 };
 
+let resizeTotal = total_width();
+document.addEventListener("load", () => {
+    resizeTotal = total_width();
+});
+
 // ==================== Navigation Active ====================
 const ham = document.querySelector('.menu_toggle');
 const mpanel = document.querySelector('.mobile_panel');
@@ -84,7 +89,7 @@ sub_map.forEach((id) => {
         ScrollTrigger.create({
             trigger: section,
             start: "top top",
-            end: () => "+=" + (total_width() + window.innerWidth),
+            end: () => "+=" + (resizeTotal + window.innerWidth),
             onEnter: () => linkEl.forEach((a) => set_active(a)),
             onEnterBack: () => linkEl.forEach((a) => set_active(a)),
         });
@@ -130,7 +135,7 @@ gsap.timeline({ defaults: { duration: 0.8, ease: "power2.out" } })
 let tl = gsap.timeline({
     scrollTrigger: {
         trigger: ".txt_area",
-        start: "top 20%",
+        start: "top 10%",
         end: "bottom bottom",
         scrub: true,
     }
@@ -189,8 +194,8 @@ gsap.to(".track", {
     scrollTrigger: {
         trigger: ".horizontal_section",
         start: "top top",
-        end: () => "+=" + (total_width() + window.innerWidth),
-        scrub: true,
+        end: () => "+=" + (total_width() + 500 + window.innerWidth),
+        scrub: 1,
         pin: true,
         anticipatePin: 1,
         toggleActions: "play none none reset",
@@ -265,14 +270,14 @@ window.addEventListener("load", () => {
 const cursor = document.querySelector(".custom-cursor");
 
 document.addEventListener("mousemove", (e) => {
-  cursor.style.top = `${e.clientY}px`;
-  cursor.style.left = `${e.clientX}px`;
+    cursor.style.top = `${e.clientY}px`;
+    cursor.style.left = `${e.clientX}px`;
 });
 
 document.addEventListener("mousedown", () => {
-  cursor.classList.add("click");
+    cursor.classList.add("click");
 });
 
 document.addEventListener("mouseup", () => {
-  cursor.classList.remove("click");
+    cursor.classList.remove("click");
 });
