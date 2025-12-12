@@ -1,0 +1,129 @@
+/* 전체 배경 & 기본 설정 */
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Pretendard",
+    "Noto Sans KR", sans-serif;
+  background-color: #050505;
+  color: #f7f7f7;
+}
+
+/* 섹션 래퍼 */
+.popup-wrap {
+  min-height: 100vh;
+  padding: 80px 6vw;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 6rem;
+  box-sizing: border-box;
+  background-color: rgb(246, 217, 217);
+}
+
+/* 각 카드(영상 + 텍스트 묶음) */
+.popup-card {
+  position: relative;
+  max-width: 300px; /* 영상 + 텍스트 전체 크기 */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgb(255, 0, 85);
+
+  /* 스크롤 애니메이션 초기 상태 */
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* JS에서 붙는 클래스 */
+.popup-card.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 영상 박스 */
+.popup-media {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  border-radius: 26px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+  background: #111;
+  transition: transform 0.4s ease-out, box-shadow 0.4s ease-out;
+}
+
+/* 살짝 팝업 느낌 hover */
+.popup-card:hover .popup-media {
+  transform: translateY(-6px);
+  box-shadow: 0 26px 55px rgba(0, 0, 0, 0.6);
+}
+
+.popup-media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 텍스트 카드 (글라스모피즘) */
+.popup-text-card {
+  width: 100%;
+  margin-top: -40px; /* 영상과 겹치게 */
+  padding: 24px 28px 26px;
+  border-radius: 26px;
+  background: rgba(20, 20, 20, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.5);
+}
+
+/* 영어 프롬프트 */
+.prompt-en {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* 한글 설명 */
+.prompt-kr {
+  margin-top: 14px;
+  font-size: 12px;
+  color: #dadada;
+  line-height: 1.7;
+}
+
+/* 점선 */
+.divider {
+  display: block;
+  width: 100%;
+  margin: 16px 0 12px;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.25);
+}
+
+/* 반응형 */
+@media (max-width: 1024px) {
+  .popup-wrap {
+    flex-direction: column;
+    gap: 4rem;
+    padding: 60px 5vw 80px;
+  }
+
+  .popup-card {
+    max-width: 480px;
+  }
+}
+
+@media (max-width: 640px) {
+  .popup-text-card {
+    padding: 18px 16px;
+    border-radius: 22px;
+  }
+
+  .prompt-en {
+    font-size: 12px;
+  }
+
+  .prompt-kr {
+    font-size: 11px;
+  }
+}
