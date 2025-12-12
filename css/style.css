@@ -31,9 +31,9 @@
   --round: 18px;
   --header: rgba(108, 80, 27, 0.2);
   --border: rgba(108, 80, 27, 0.08);
-  --accent: #9f87dd;
-  --accent1: #c57785;
-  --accent2: #ce8ea4;
+  --accent: #f2e0e6;
+  --accent1: #3f3333;
+  --accent2: #3f3333;
   /* 네온 그린 */
   --accent3: #4cc9f0;
   --accent4: #46f2a1;
@@ -43,11 +43,11 @@
   --bg-Cdeep-color2: #424769;
   --bg-Cdeep-color3: #5e6a75;
   --bg-Cdeep-color4: #5e7571;
-  --primary-color: #9f87dd;
-  --primary-color-full: #c57785;
-  --point-color1: #ce8ea4;
-  --point-color2: #af6362;
-  --point-color3: #947af5;
+  --primary-color: #3f3333;
+  --primary-color-full: #3f3333;
+  --point-color1: #3f3333;
+  --point-color2: #3f3333;
+  --point-color3: #3f3333;
   --point-color4: #7af57d;
   --main-color: #0ea38a;
   --main-color-deep: #03423d;
@@ -69,7 +69,7 @@
   --primary-color-full: #f6b17a;
   --point-color1: #7abcf5;
   --point-color2: #7ae3f5;
-  --point-color3: #947af5;
+  --point-color3: #3f3333;
   --point-color4: #7af57d;
   --primary-color1: #7077a1;
   --main-color: #0ea38a;
@@ -92,16 +92,17 @@
 
 /* 카드/패널에 붙여 쓰는 클래스 */
 .glass {
-  background: linear-gradient(to bottom right,
-      rgba(45, 50, 80, 0.38),
-      rgba(45, 50, 80, 0.16));
+  background: linear-gradient(
+    to bottom right,
+    rgba(45, 50, 80, 0.38),
+    rgba(45, 50, 80, 0.16)
+  );
   backdrop-filter: blur(12px) saturate(140%);
   -webkit-backdrop-filter: blur(12px) saturate(140%);
   /* border-bottom: 1px solid var(--glass-stroke); */
   /* border-radius: 18px; */
   box-shadow: 0 10px 30px var(--glass-shadow), inset 0 0.5px 0 #ffb35199,
-    /* 하이라이트 */
-    inset 0 -0.5px 0 rgba(253, 184, 95, 0.06);
+    /* 하이라이트 */ inset 0 -0.5px 0 rgba(253, 184, 95, 0.06);
   /* 미세 음영 */
 }
 
@@ -133,9 +134,11 @@ body::before {
   position: fixed;
   inset: 0;
   z-index: -1;
-  background: radial-gradient(1200px 600px at 10% -10%,
+  background: radial-gradient(
+      1200px 600px at 10% -10%,
       #ffffff 0%,
-      transparent 60%),
+      transparent 60%
+    ),
     radial-gradient(900px 700px at 110% 10%, #f6f7fb 0%, transparent 60%),
     linear-gradient(120deg, #f7f8fc 0%, #ffffff 50%, #f5f8ff 100%);
   /* 선택: 아주 옅은 노이즈 */
@@ -155,7 +158,7 @@ section.txt_area {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(to bottom, #050c09, #263027) no-repeat;
+  background: linear-gradient(to bottom, #2a2a2a, #2a2a2a) no-repeat;
   background-size: 100% 0;
   /* 처음에는 세로 100%, 가로 0% */
   background-position: left top;
@@ -175,13 +178,12 @@ section.txt_area h2 {
 
 section.txt_area h2 .tit {
   position: relative;
+  font-weight: 800;
+  padding-bottom: 5%;
   display: block;
   color: rgba(159, 135, 221, 0.2);
   width: 100%;
-  background: linear-gradient(to top,
-      #9f87dd,
-      #c57785,
-      #ce8ea4) no-repeat;
+  background: linear-gradient(to top, #92a8d1, #f7cac9, #f7cac9) no-repeat;
   -webkit-background-clip: text;
   background-clip: text;
   background-size: 0%;
@@ -214,17 +216,18 @@ section.txt_area h2 span {
 
 /* 카드/패널에 붙여 쓰는 클래스 */
 .glass {
-  background: linear-gradient(to bottom right,
-      rgba(45, 50, 80, 0.38),
-      rgba(45, 50, 80, 0.16));
+  background: linear-gradient(
+    to bottom right,
+    rgba(45, 50, 80, 0.38),
+    rgba(45, 50, 80, 0.16)
+  );
   backdrop-filter: blur(12px) saturate(140%);
   -webkit-backdrop-filter: blur(12px) saturate(140%);
   /* border-bottom: 1px solid var(--glass-stroke); */
   /* border-radius: 18px; */
   box-shadow: 0 10px 30px var(--glass-shadow),
     inset 0 0.5px 0 rgba(255, 179, 81, 0.6),
-    /* 하이라이트 */
-    inset 0 -0.5px 0 rgba(253, 184, 95, 0.06);
+    /* 하이라이트 */ inset 0 -0.5px 0 rgba(253, 184, 95, 0.06);
   /* 미세 음영 */
 }
 
@@ -353,12 +356,16 @@ h1.brand_logo img {
   display: grid;
   place-items: center;
   text-align: center;
-  background: radial-gradient(900px 600px at 85% -10%,
+  background: radial-gradient(
+      900px 600px at 85% -10%,
       rgba(70, 242, 161, 0.12),
-      transparent 60%),
-    radial-gradient(700px 500px at -10% 30%,
+      transparent 60%
+    ),
+    radial-gradient(
+      700px 500px at -10% 30%,
       rgba(70, 242, 161, 0.1),
-      transparent 60%);
+      transparent 60%
+    );
   overflow: hidden;
   position: relative;
 }
@@ -424,10 +431,12 @@ h2 {
   /*   background: linear-gradient(to bottom right,
       rgba(52, 218, 190, 0.18),
       rgba(255, 255, 255, 0.05)); */
-  background-image: linear-gradient(to bottom,
-      #d8cdc9,
-      #eeedf0,
-      var(--primary-color));
+  background-image: linear-gradient(
+    to bottom,
+    #d8cdc9,
+    #eeedf0,
+    var(--primary-color)
+  );
   flex-direction: column;
   padding-block: 10vh;
 }
@@ -494,21 +503,23 @@ h2 {
   justify-content: center;
   cursor: pointer;
   background: var(--card);
-  background-image: linear-gradient(to left top,
-      #f2c444,
-      #ac8839,
-      #896c33,
-      #67512c,
-      #544326,
-      #413621,
-      #282416,
-      #30291b,
-      #413621,
-      #544326,
-      #67512c,
-      #896c33,
-      #ac8839,
-      #f2c444);
+  background-image: linear-gradient(
+    to left top,
+    #f2c444,
+    #ac8839,
+    #896c33,
+    #67512c,
+    #544326,
+    #413621,
+    #282416,
+    #30291b,
+    #413621,
+    #544326,
+    #67512c,
+    #896c33,
+    #ac8839,
+    #f2c444
+  );
   /*   background: conic-gradient(from 40deg at 50% 50%, #09114B 0deg, #157654 180deg, #FFBE0B 360deg); */
   overflow: hidden;
   /* 반사광이 밖으로 안 새게 */
@@ -545,7 +556,7 @@ h2 {
   font-weight: 300;
 }
 
-.feature_card h3>strong {
+.feature_card h3 > strong {
   font-size: 2rem;
   font-weight: 600;
 }
@@ -560,7 +571,7 @@ h2 {
   transition: transform 0.15s linear;
 }
 
-.tilt_layer>* {
+.tilt_layer > * {
   transform: translateZ(30px);
 }
 
@@ -807,7 +818,7 @@ h2 {
   position: relative;
   height: 100vh;
   overflow: hidden;
-  background: var(--card);
+  background: #2a2a2a;
 }
 
 .track {
@@ -862,17 +873,18 @@ h2 {
 .h_item .txt_box {
   width: 40%;
   height: 60%;
-  background: #ccc;
+  background: #000000;
   padding-top: 50px;
   padding-left: 50px;
   display: flex;
   flex-direction: column;
   gap: 20px;
   justify-content: center;
+  right: 50px;
 }
 
 .h_item .txt_box h3 {
-  font-size: 30px;
+  font-size: 50px;
 }
 
 .h_item .txt_box p {
@@ -887,8 +899,8 @@ h2 {
 .h_item .txt_box a {
   display: inline-flex;
   padding: 10px 20px;
-  background: #035f4e;
-  border-radius: 50px;
+  background: #262727;
+  border-radius: 10px;
 }
 
 .h_item .txt_box a:hover {
@@ -985,9 +997,12 @@ h2 {
 }
 
 .vid.on {
-  background: linear-gradient(to bottom,
+  background: linear-gradient(
+      to bottom,
       var(--primary-color-full),
-      rgba(255, 255, 255, 0.2)) no-repeat;
+      rgba(255, 255, 255, 0.2)
+    )
+    no-repeat;
   color: var(--white-color);
 }
 
