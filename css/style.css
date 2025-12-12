@@ -907,7 +907,11 @@ h2 {
   background: var(--accent);
   color: #0c1217;
 }
+/* 작업 툴 공간 */
+.work_section {
+  background-color: #035f4e;
 
+}
 /* ===== Stats (counters) ===== */
 .stats_section {
   text-align: center;
