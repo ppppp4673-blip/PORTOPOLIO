@@ -159,11 +159,38 @@ gsap.to(".track", {
     pin: true,
     anticipatePin: 1,
     toggleActions: "play none none reset",
+    onUpdate: () => updateCoverflow(),
   },
 });
 
 
+const cards = gsap.utils.toArray(".h_item");
 
+function updateCoverflow() {
+  const viewportCenter = window.innerWidth / 2;
+
+  cards.forEach((card) => {
+    const rect = card.getBoundingClientRect();
+    const cardCenter = rect.left + rect.width / 2;
+
+    // 중심에서 떨어진 거리 (-1 ~ 1)
+    const dist = (cardCenter - viewportCenter) / viewportCenter;
+
+    // Coverflow 효과 매핑
+    const rotateY = dist * -35;      // 좌우 회전
+    const scale = 1 - Math.abs(dist) * 0.4; // 축소
+    const opacity = 1 - Math.abs(dist) * 0.6;
+    const z = -Math.abs(dist) * 280; // 깊이감
+
+    gsap.set(card, {
+      rotateY,
+      scale,
+      opacity,
+      z,
+      transformOrigin: "center",
+    });
+  });
+}
 
 
 window.addEventListener("resize", () => ScrollTrigger.refresh());
