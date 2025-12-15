@@ -666,6 +666,16 @@ h1.brand_logo img {
 
 
 /* 인스타 */
+.insta,
+.insta * {
+  cursor: grab !important;
+}
+
+.insta:active,
+.insta *:active {
+  cursor: grabbing !important;
+}
+
 .insta {
   position: relative;
   min-height: 100vh;
@@ -680,7 +690,7 @@ h1.brand_logo img {
   height: -webkit-fill-available;
   user-select: none;
   /* overflow: hidden; */
-  background: #ccc;
+
 }
 
 .insta .center {
