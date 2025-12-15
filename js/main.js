@@ -34,10 +34,7 @@ const total_width = () => {
   return track.scrollWidth - wrap.clientWidth;
 };
 
-let resizeTotal = total_width();
-document.addEventListener("load", () => {
-  resizeTotal = total_width();
-});
+
 
 // ==================== Navigation Active ====================
 const ham = document.querySelector(".menu_toggle");
@@ -60,7 +57,7 @@ function set_active(link) {
 }
 
 // 섹션 맵 정의
-const sub_map = ["#hero", "#textArea", "#showcase", "#gallery", "#vid"];
+const sub_map = ["#textArea", "#gallery", "#showcase"];
 
 sub_map.forEach((id) => {
   const section = document.querySelector(id);
@@ -83,7 +80,7 @@ sub_map.forEach((id) => {
     ScrollTrigger.create({
       trigger: section,
       start: "top top",
-      end: () => "+=" + (resizeTotal + window.innerWidth),
+      end: () => "+=" + (total_width() + window.innerWidth),
       onEnter: () => linkEl.forEach((a) => set_active(a)),
       onEnterBack: () => linkEl.forEach((a) => set_active(a)),
     });
@@ -116,11 +113,11 @@ navLinks.forEach((link) => {
 });
 
 // ==================== Hero intro ====================
-gsap
+/* gsap
   .timeline({ defaults: { duration: 0.8, ease: "power2.out" } })
   .to(".hero_title", { y: 0, opacity: 1 })
   .to(".hero_sub", { y: 0, opacity: 1 }, "<0.12")
-  .to(".hero_cta", { y: 0, opacity: 1 }, "<0.12");
+  .to(".hero_cta", { y: 0, opacity: 1 }, "<0.12"); */
 
 let tl = gsap.timeline({
   scrollTrigger: {
@@ -131,11 +128,7 @@ let tl = gsap.timeline({
   },
 });
 
-tl.to(".txt_area strong.tit", {
-  backgroundSize: "100%",
-  duration: 1,
-  ease: "none",
-})
+tl
   .to(".txt_area", {
     backgroundSize: "100% 100%",
     opacity: 1,
@@ -148,65 +141,11 @@ tl.to(".txt_area strong.tit", {
     "+=0.6"
   )
   .to(
-    ".txt_area b.tit",
-    { backgroundSize: "100%", duration: 1, ease: "none" },
-    "+=1.2"
-  )
-  .to(
     ".txt_area em.tit",
     { backgroundSize: "100%", duration: 1, ease: "none" },
     "+=1.8"
   );
 
-// ==================== Showcase stack ====================
-const pin_bg = document.getElementById("pin_bg");
-const photos = gsap.utils.toArray(".photo");
-
-const pinTl = gsap.timeline({
-  scrollTrigger: {
-    trigger: ".pin_scene",
-    start: "top top",
-    end: "+=1800",
-    pin: true,
-    scrub: true,
-    anticipatePin: 1,
-    toggleActions: "play none none reset",
-  },
-});
-
-pinTl.to(
-  pin_bg,
-  { filter: "blur(12px)", scale: 1.06, duration: 1, ease: "none" },
-  0
-);
-photos.forEach((el, i) => {
-  pinTl.add(() => {
-    el.style.zIndex = String(100 + i);
-    el.classList.add("glitch");
-    gsap.delayedCall(0.4, () => el.classList.remove("glitch"));
-  }, i * 0.22);
-  pinTl.fromTo(
-    el,
-    {
-      opacity: 0,
-      y: 1080,
-      scale: 0.4,
-      filter: "blur(6px)",
-      rotate: i % 2 ? 4 : -4,
-    },
-    {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      filter: "blur(0px)",
-      rotate: i % 2 ? 5 : -5,
-      duration: 0.85,
-      ease: "power3.out",
-    },
-    i * 0.22
-  );
-});
-pinTl.to(".float_wrap", { yPercent: -6, duration: 0.8, ease: "none" }, ">0.1");
 
 // ==================== Horizontal gallery ====================
 gsap.to(".track", {
@@ -215,73 +154,18 @@ gsap.to(".track", {
   scrollTrigger: {
     trigger: ".horizontal_section",
     start: "top top",
-    end: () => "+=" + (total_width() + 500 + window.innerWidth),
-    scrub: 1,
+    end: () => "+=" + (total_width() + window.innerWidth),
+    scrub: true,
     pin: true,
     anticipatePin: 1,
     toggleActions: "play none none reset",
-    onUpdate: () => updateCoverflow(),
   },
 });
 
-// ======================== Coverflow Effect ==========================
-const cards = gsap.utils.toArray(".h_item");
 
-function updateCoverflow() {
-  const viewportCenter = window.innerWidth / 2;
 
-  cards.forEach((card) => {
-    const rect = card.getBoundingClientRect();
-    const cardCenter = rect.left + rect.width / 2;
 
-    // 중심에서 떨어진 거리 (-1 ~ 1)
-    const dist = (cardCenter - viewportCenter) / viewportCenter;
 
-    // Coverflow 효과 매핑
-    const rotateY = dist * -35; // 좌우 회전
-    const scale = 1 - Math.abs(dist) * 0.4; // 축소
-    const opacity = 1 - Math.abs(dist) * 0.6;
-    const z = -Math.abs(dist) * 280; // 깊이감
-
-    gsap.set(card, {
-      rotateY,
-      scale,
-      opacity,
-      z,
-      transformOrigin: "center",
-    });
-  });
-}
-gsap.timeline({
-  scrollTrigger: {
-    trigger: ".vid",
-    start: "top 40%",
-    end: "bottom center",
-    scrub: true,
-    // markers: true,
-    toggleClass: { targets: ".vid", className: "on" },
-  },
-});
-
-// 2. .vid_box 핀 처리 및 내부 video 스케일 애니메이션
-gsap
-  .timeline({
-    scrollTrigger: {
-      trigger: ".vid_box", // 부모 섹션을 트리거로 사용
-      start: "top 10%",
-      end: "top 10%+=2500", // 1500px 스크롤 동안 애니메이션 진행 (필요에 따라 조정)
-      scrub: 1,
-      pin: ".vid_box", // .vid_box를 핀 처리
-      pinSpacing: true,
-      pinReparent: true, // 부모 transform 문제 해결
-      // markers: true,
-    },
-  })
-  .fromTo(
-    ".vid_box video",
-    { scale: 0.45, opacity: 0.45, transformOrigin: "top center" },
-    { scale: 1, opacity: 1, ease: "power2.out", duration: 2 }
-  );
 window.addEventListener("resize", () => ScrollTrigger.refresh());
 
 // ==================== Refresh ====================

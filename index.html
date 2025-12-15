@@ -1,138 +1,113 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>소은 포트폴리오</title>
-    <link rel="stylesheet" href="css/style.css" />
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-    <script src="https://unpkg.com/lenis@1.3.15/dist/lenis.min.js"></script>
-    <script src="js/main.js" defer></script>
-  </head>
 
-  <body>
-    <!-- 마우스커서 -->
-    <div class="custom-cursor">
-      <img src="img/cursor_hair.png" alt="cursor" />
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>소은 포트폴리오</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.3.15/dist/lenis.min.js"></script>
+  <script src="js/main.js" defer></script>
+</head>
+
+<body>
+  <!-- 마우스커서 -->
+  <div class="custom-cursor">
+    <img src="img/cursor_hair.png" alt="cursor" />
+  </div>
+
+  <!-- Header -->
+  <header class="site_header" id="site_header">
+    <div class="container header_row">
+      <h1 class="brand_logo title_gra">
+        <img src="./img/cursor_hair.png" alt="#" />
+      </h1>
+      <nav class="primary_nav">
+        <a href="#textArea">textArea</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#showcase">Showcase</a>
+      </nav>
+      <button class="menu_toggle" id="menu_toggle" aria-label="open menu">
+        ☰
+      </button>
     </div>
+    <div class="mobile_panel" id="mobile_panel">
+      <nav class="mobile_menu">
+        <a href="#textArea">textArea</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#showcase">Showcase</a>
+      </nav>
+    </div>
+  </header>
 
-    <!-- Header -->
-    <header class="site_header" id="site_header">
-      <div class="container header_row">
-        <h1 class="brand_logo title_gra">
-          <img src="./img/cursor_hair.png" alt="#" />
-        </h1>
-        <nav class="primary_nav">
-          <a href="#hero" class="">Home</a>
-          <a href="#textArea">textArea</a>
-          <a href="#showcase">Showcase</a>
-          <a href="#gallery">Gallery</a>
-          <a href="#vid">video</a>
-        </nav>
-        <button class="menu_toggle" id="menu_toggle" aria-label="open menu">
-          ☰
-        </button>
-      </div>
-      <div class="mobile_panel" id="mobile_panel">
-        <nav class="mobile_menu">
-          <a href="#hero">Home</a>
-          <a href="#textArea">textArea</a>
-          <a href="#showcase">Showcase</a>
-          <a href="#gallery">Gallery</a>
-          <a href="#vid">video</a>
-        </nav>
-      </div>
-    </header>
+  <!-- . -->
+  <section id="textArea" class="txt_area">
+    <h2>
+      <i class="tit"><span>SO EUN</span></i>
+      <em class="tit"><span>PORTOPOLIO</span></em>
+    </h2>
+  </section>
 
-    <!-- . -->
-    <section id="textArea" class="txt_area">
-      <h2>
-        <em class="tit"><span>SO EUN</span></em>
-        <em class="tit"><span>PORTOPOLIO</span></em>
-      </h2>
-    </section>
-
-    <!-- 프로젝트 소개 -->
-    <section id="gallery" class="horizontal_section">
-      <div class="track">
-        <article class="h_item h1">
-          <div class="txt_box">
-            <h3>OD</h3>
-            <p class="txt">오늘을 디테일하게</p>
-            <div class="btns">
-              <a href="#">프로토타입</a>
-              <a href="#">슬라이드</a>
-            </div>
+  <!-- 프로젝트 소개 -->
+  <section id="gallery" class="horizontal_section">
+    <div class="track">
+      <article class="h_item h1">
+        <div class="txt_box">
+          <h3>OD</h3>
+          <p class="txt">오늘을 디테일하게</p>
+          <div class="btns">
+            <a href="#">프로토타입</a>
+            <a href="#">슬라이드</a>
           </div>
-        </article>
-
-        <article class="h_item h2">
-          <div class="txt_box">
-            <h3>National Musuem of Korea</h3>
-            <p class="txt">5000년의 역사를 디지털로</p>
-            <div class="btns">
-              <a href="#">프로토타입</a>
-              <a href="#">슬라이드</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="h_item h3">
-          <div class="txt_box">
-            <h3>MOREMO</h3>
-            <p class="txt">오늘을 디테일하게</p>
-            <div class="btns">
-              <a href="#">프로토타입</a>
-              <a href="#">슬라이드</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="h_item h4">
-          <div class="txt_box">
-            <h3>Kongple</h3>
-            <p class="txt">
-              독서 후 기록을 좀 더 쉽고 빠르게 할 수있는 서비스는 없을까?
-            </p>
-            <div class="btns">
-              <a href="#">프로토타입</a>
-              <a href="#">슬라이드</a>
-            </div>
-          </div>
-          <a
-            href="https://www.figma.com/slides/4OfSfhjhEHY097JbQOCoXO/-%EA%B0%9C%EC%9D%B8--%EB%B0%95%EC%86%8C%EC%9D%80---%EC%BD%A9%ED%94%8C?node-id=6008-2220&t=W6h9kR083Uz9QRgX-1.pptx"
-            target="_blank"
-          ></a>
-        </article>
-      </div>
-    </section>
-
-    <!-- 인스타피드 -->
-    <section id="showcase" class="pin_scene">
-      <div class="pin_layer">
-        <div
-          class="pin_bg"
-          id="pin_bg"
-          style="background-image: url('./img/popup_hair.png')"
-        ></div>
-        <div class="pin_overlay"></div>
-        <div class="pin_copy">
-          <h2>INSTA PEED</h2>
         </div>
-        <div class="float_wrap">
-          <div class="photo p1"></div>
-          <div class="photo p2"></div>
-          <div class="photo p3"></div>
-          <div class="photo p4"></div>
-          <div class="photo p5"></div>
-          <div class="photo p6"></div>
-          <div class="photo p7"></div>
-          <div class="photo p8"></div>
-          <div class="photo p9"></div>
+      </article>
+
+      <article class="h_item h2">
+        <div class="txt_box">
+          <h3>National Musuem of Korea</h3>
+          <p class="txt">5000년의 역사를 디지털로</p>
+          <div class="btns">
+            <a href="#">프로토타입</a>
+            <a href="#">슬라이드</a>
+          </div>
         </div>
-      </div>
-    </section>
-  </body>
+      </article>
+
+      <article class="h_item h3">
+        <div class="txt_box">
+          <h3>MOREMO</h3>
+          <p class="txt">오늘을 디테일하게</p>
+          <div class="btns">
+            <a href="#">프로토타입</a>
+            <a href="#">슬라이드</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="h_item h4">
+        <div class="txt_box">
+          <h3>Kongple</h3>
+          <p class="txt">
+            독서 후 기록을 좀 더 쉽고 빠르게 할 수있는 서비스는 없을까?
+          </p>
+          <div class="btns">
+            <a href="#">프로토타입</a>
+            <a href="#">슬라이드</a>
+          </div>
+        </div>
+        <a href="https://www.figma.com/slides/4OfSfhjhEHY097JbQOCoXO/-%EA%B0%9C%EC%9D%B8--%EB%B0%95%EC%86%8C%EC%9D%80---%EC%BD%A9%ED%94%8C?node-id=6008-2220&t=W6h9kR083Uz9QRgX-1.pptx"
+          target="_blank"></a>
+      </article>
+    </div>
+  </section>
+
+  <!-- 인스타피드 -->
+  <section id="next" class="pin_scene">
+
+  </section>
+</body>
+
 </html>
