@@ -34,8 +34,6 @@ const total_width = () => {
   return track.scrollWidth - wrap.clientWidth;
 };
 
-
-
 // ==================== Navigation Active ====================
 const ham = document.querySelector(".menu_toggle");
 const mpanel = document.querySelector(".mobile_panel");
@@ -128,13 +126,12 @@ let tl = gsap.timeline({
   },
 });
 
-tl
-  .to(".txt_area", {
-    backgroundSize: "100% 100%",
-    opacity: 1,
-    duration: 1,
-    ease: "none",
-  })
+tl.to(".txt_area", {
+  backgroundSize: "100% 100%",
+  opacity: 1,
+  duration: 1,
+  ease: "none",
+})
   .to(
     ".txt_area i.tit",
     { backgroundSize: "100%", duration: 1, ease: "none" },
@@ -145,7 +142,6 @@ tl
     { backgroundSize: "100%", duration: 1, ease: "none" },
     "+=1.8"
   );
-
 
 // ==================== Horizontal gallery ====================
 gsap.to(".track", {
@@ -163,7 +159,6 @@ gsap.to(".track", {
   },
 });
 
-
 const cards = gsap.utils.toArray(".h_item");
 
 function updateCoverflow() {
@@ -177,7 +172,7 @@ function updateCoverflow() {
     const dist = (cardCenter - viewportCenter) / viewportCenter;
 
     // Coverflow 효과 매핑
-    const rotateY = dist * -35;      // 좌우 회전
+    const rotateY = dist * -35; // 좌우 회전
     const scale = 1 - Math.abs(dist) * 0.4; // 축소
     const opacity = 1 - Math.abs(dist) * 0.6;
     const z = -Math.abs(dist) * 280; // 깊이감
@@ -191,7 +186,6 @@ function updateCoverflow() {
     });
   });
 }
-
 
 window.addEventListener("resize", () => ScrollTrigger.refresh());
 
@@ -214,7 +208,6 @@ document.addEventListener("mousedown", () => {
 document.addEventListener("mouseup", () => {
   cursor.classList.remove("click");
 });
-
 
 const images = gsap.utils.toArray(".insta .item");
 
@@ -249,7 +242,8 @@ const init = () => {
         opacity: 1,
         ease: "power4.out",
         duration: 1,
-        delay: 0.15 * Math.floor(index / 2),
+        delay: 0.11 * Math.floor(index / 2),
+        // 카드 속도 조절
       },
       0
     );
@@ -327,5 +321,5 @@ ScrollTrigger.create({
       init();
       draggable();
     }
-  }
+  },
 });

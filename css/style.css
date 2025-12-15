@@ -46,7 +46,7 @@ body {
   display: block;
   width: 10px;
   height: 10px;
-  background: red;
+  background: rgb(24, 22, 22);
   border-radius: 50%;
   position: absolute;
   left: 0;
@@ -127,16 +127,17 @@ body {
 
 /* 카드/패널에 붙여 쓰는 클래스 */
 .glass {
-  background: linear-gradient(to bottom right,
-      rgba(45, 50, 80, 0.38),
-      rgba(45, 50, 80, 0.16));
+  background: linear-gradient(
+    to bottom right,
+    rgba(45, 50, 80, 0.38),
+    rgba(45, 50, 80, 0.16)
+  );
   backdrop-filter: blur(12px) saturate(140%);
   -webkit-backdrop-filter: blur(12px) saturate(140%);
   /* border-bottom: 1px solid var(--glass-stroke); */
   /* border-radius: 18px; */
   box-shadow: 0 10px 30px var(--glass-shadow), inset 0 0.5px 0 #ffb35199,
-    /* 하이라이트 */
-    inset 0 -0.5px 0 rgba(253, 184, 95, 0.06);
+    /* 하이라이트 */ inset 0 -0.5px 0 rgba(253, 184, 95, 0.06);
   /* 미세 음영 */
 }
 
@@ -306,9 +307,11 @@ body::before {
   position: fixed;
   inset: 0;
   z-index: -1;
-  background: radial-gradient(1200px 600px at 10% -10%,
+  background: radial-gradient(
+      1200px 600px at 10% -10%,
       #ffffff 0%,
-      transparent 60%),
+      transparent 60%
+    ),
     radial-gradient(900px 700px at 110% 10%, #f6f7fb 0%, transparent 60%),
     linear-gradient(120deg, #f7f8fc 0%, #ffffff 50%, #f5f8ff 100%);
   /* 선택: 아주 옅은 노이즈 */
@@ -397,17 +400,18 @@ section.txt_area h2 span {
 
 /* 카드/패널에 붙여 쓰는 클래스 */
 .glass {
-  background: linear-gradient(to bottom right,
-      rgba(45, 50, 80, 0.38),
-      rgba(45, 50, 80, 0.16));
+  background: linear-gradient(
+    to bottom right,
+    rgba(45, 50, 80, 0.38),
+    rgba(45, 50, 80, 0.16)
+  );
   backdrop-filter: blur(12px) saturate(140%);
   -webkit-backdrop-filter: blur(12px) saturate(140%);
   /* border-bottom: 1px solid var(--glass-stroke); */
   /* border-radius: 18px; */
   box-shadow: 0 10px 30px var(--glass-shadow),
     inset 0 0.5px 0 rgba(255, 179, 81, 0.6),
-    /* 하이라이트 */
-    inset 0 -0.5px 0 rgba(253, 184, 95, 0.06);
+    /* 하이라이트 */ inset 0 -0.5px 0 rgba(253, 184, 95, 0.06);
   /* 미세 음영 */
 }
 
@@ -664,7 +668,6 @@ h1.brand_logo img {
   height: 65vw;
 }
 
-
 /* 인스타 */
 .insta,
 .insta * {
@@ -683,6 +686,20 @@ h1.brand_logo img {
   height: 100vh;
   overflow: hidden;
 }
+.insta::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url(../img/image\ 239.png);
+  background-size: cover;
+  background-position: center;
+  filter: blur(8px); /* 👈 흐림 정도 조절 */
+  opacity: 0.7; /* 👈 투명도 조절 (선택사항) */
+  z-index: 0;
+}
 
 .insta .container {
   width: 100vw;
@@ -690,14 +707,13 @@ h1.brand_logo img {
   height: -webkit-fill-available;
   user-select: none;
   /* overflow: hidden; */
-
 }
 
 .insta .center {
   height: 100vh;
   position: absolute;
   left: 50%;
-  top: 28%;
+  top: 8%;
   transform: translate(-50%);
   user-select: none;
 }
