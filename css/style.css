@@ -879,7 +879,7 @@ h2 {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  justify-content: center;
+  justify-content: flex-end;
   right: 50px;
 }
 
@@ -897,7 +897,7 @@ h2 {
 }
 
 .h_item .txt_box a {
-  display: inline-flex;
+  display: flex;
   padding: 10px 20px;
   background: #262727;
   border-radius: 10px;
