@@ -3,6 +3,10 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Golos+Text:wght@400..900&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 
 /* 기본 커서 숨기기 */
+:root {
+  --columns: 3;
+}
+
 body,
 html {
   cursor: none !important;
