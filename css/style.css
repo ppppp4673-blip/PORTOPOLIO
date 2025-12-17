@@ -13,7 +13,7 @@ html {
 }
 
 body {
-  background-color: #1a1721;
+  background-color: #2a2a2a;
 }
 
 /* 커스텀 커서 */
@@ -370,7 +370,7 @@ section.txt_area h2 .tit {
   display: block;
   color: rgba(159, 135, 221, 0.2);
   width: 100%;
-  background: linear-gradient(to top, #92a8d1, #f7cac9, #f7cac9) no-repeat;
+  background: linear-gradient(to top, #7fa6f0, #f7cac9, #fac7c6) no-repeat;
   -webkit-background-clip: text;
   background-clip: text;
   background-size: 0%;
@@ -476,7 +476,7 @@ h1.brand_logo img {
   display: flex;
   height: 100%;
   align-items: center;
-  gap: 18px;
+  gap: 16px;
 }
 
 .primary_nav a {
@@ -555,7 +555,7 @@ h1.brand_logo img {
 
 .h_item {
   min-width: 60vw;
-  height: 60vh;
+  height: 70vh; /* 컨테이너 높이 */
   margin: 0 2vw;
   border-radius: 24px;
   display: grid;
@@ -567,7 +567,13 @@ h1.brand_logo img {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
   position: relative;
   background-size: cover;
-  /* 추가 */
+  overflow: hidden; /* 추가: 이미지가 넘치지 않도록 */
+}
+.h_item img {
+  width: 100%;
+  height: 100%; /* 부모 높이에 맞춤 */
+  object-fit: cover; /* 비율 유지하면서 영역 채우기 */
+  border-radius: 24px;
 }
 
 .h_item:nth-child(1) {
@@ -575,7 +581,7 @@ h1.brand_logo img {
 }
 
 .h_item:nth-child(2) {
-  background-image: url("../img/museum.png");
+  background-image: url("../img/musuem.png");
 }
 
 .h_item:nth-child(3) {
@@ -587,7 +593,7 @@ h1.brand_logo img {
 }
 
 .h_item .txt_box {
-  position: absolute;
+  position: relative;
   width: 100%;
   height: 100%;
   padding: 60px 80px;
