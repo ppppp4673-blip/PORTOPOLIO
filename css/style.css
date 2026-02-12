@@ -553,6 +553,7 @@ h1.brand_logo img {
   padding: 0 8vw;
 }
 
+
 .h_item {
   min-width: 60vw;
   height: 70vh; /* 컨테이너 높이 */
@@ -666,6 +667,7 @@ h1.brand_logo img {
   color: rgba(255, 255, 255, 0.8);
   font-weight: 300;
 }
+
 
 .section .project {
   display: flex;
